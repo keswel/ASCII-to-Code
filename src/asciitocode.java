@@ -12,7 +12,7 @@ public class asciitocode{
 
         for (int i=0; i<size; i++) {
             // checks for: \ " and ' if found, adds a \ in front of each.
-            if (charArr.get(i).equals("\"") || charArr.get(i).equals("\\") || charArr.get(i).equals("\'")) {
+            if (charArr.get(i).equals("\"") || charArr.get(i).equals("\\") || charArr.get(i).equals("'")) {
                 charArr.add(i, "\\");
                 size++;
                 i++;
@@ -59,30 +59,49 @@ public class asciitocode{
         String finalCode = "";
         boolean count = false;
         int mode;
-        String selectedMode = "";
-        String selectedLanguage = "Ascii -> Java Code";
+        String selectedMode;
+        String selectedLanguage = "ASCII art -> Java Code";
+        int langaugeMode = 1; // 1=java 2=python
         // outputs ascii art. created using this program!
-        System.out.print(" ▄▄▄· .▄▄ ·  ▄▄· ▪  ▪      ▄▄▄▄▄           ▄▄·       ·▄▄▄▄  ▄▄▄ ."+"\n"+"▐█ ▀█ ▐█ ▀. ▐█ ▌▪██ ██     •██  ▪         ▐█ ▌▪▪     ██▪ ██ ▀▄.▀·"+"\n"+"▄█▀▀█ ▄▀▀▀█▄██ ▄▄▐█·▐█·     ▐█.▪ ▄█▀▄     ██ ▄▄ ▄█▀▄ ▐█· ▐█▌▐▀▀▪▄"+"\n"+"▐█ ▪▐▌▐█▄▪▐█▐███▌▐█▌▐█▌     ▐█▌·▐█▌.▐▌    ▐███▌▐█▌.▐▌██. ██ ▐█▄▄▌"+"\n"+" ▀  ▀  ▀▀▀▀ ·▀▀▀ ▀▀▀▀▀▀     ▀▀▀  ▀█▄▀▪    ·▀▀▀  ▀█▄▀▪▀▀▀▀▀•  ▀▀▀ "+"\n");
+        System.out.print("""
+                 ▄▄▄· .▄▄ ·  ▄▄· ▪  ▪      ▄▄▄▄▄           ▄▄·       ·▄▄▄▄  ▄▄▄ .
+                ▐█ ▀█ ▐█ ▀. ▐█ ▌▪██ ██     •██  ▪         ▐█ ▌▪▪     ██▪ ██ ▀▄.▀·
+                ▄█▀▀█ ▄▀▀▀█▄██ ▄▄▐█·▐█·     ▐█.▪ ▄█▀▄     ██ ▄▄ ▄█▀▄ ▐█· ▐█▌▐▀▀▪▄
+                ▐█ ▪▐▌▐█▄▪▐█▐███▌▐█▌▐█▌     ▐█▌·▐█▌.▐▌    ▐███▌▐█▌.▐▌██. ██ ▐█▄▄▌
+                 ▀  ▀  ▀▀▀▀ ·▀▀▀ ▀▀▀▀▀▀     ▀▀▀  ▀█▄▀▪    ·▀▀▀  ▀█▄▀▪▀▀▀▀▀•  ▀▀▀\s
+                """);
         System.out.println("currently converting | "+selectedLanguage+"\n");
 
         mode = modeSelector();
 
-        while (mode == 4) {    // help mode
+        // help mode
+        while (mode == 4) {
             System.out.println("\n1. single-line puts all your ascii in one LONG line of code (more concise)");
             System.out.println("2. multi-line puts all your ascii in multiple lines of code (recommended)");
             System.out.println();
             mode = modeSelector();
         }
 
-        while (mode == 3) {     // language selector, java, python, c++, rust.
+        // language selector, java, python, c++, rust.
+        while (mode == 3) {
             System.out.println("\nplease select a language :)");
-            System.out.println("1. Java 2. Python 3. Rust");
+            System.out.println("1. Java 2. Python");
             System.out.println();
+            langaugeMode = scnr.nextInt();
             // change language somewhere here.
+            if (langaugeMode == 1) {
+                selectedLanguage = "ASCII art -> Java Code";
+                System.out.println("currently converting | "+selectedLanguage+"\n");
+            }else if (langaugeMode == 2) {
+                selectedLanguage = "ASCII art -> Python Code";
+                System.out.println("\ncurrently converting | "+selectedLanguage+"\n");
+            }
             mode = modeSelector();
-
         }
+
         System.out.println("\ninstructions | 1. copy and paste ascii art \n\t\t\t | 2. type \"enter0\" under art to input\n");
+
+        //TODO: USE STRINGBUILDER INSTEAD OF += CONCATENATION TO IMPROVE PERFORMANCE
 
         // reads ascii art inputted.
         while (true) {
@@ -113,13 +132,25 @@ public class asciitocode{
 
             }else if (mode == 2) {
                 // multi-line.
-                finalCode += "System.out.println("+tempLine+");\n";
-
+                if (langaugeMode == 1) {
+                    // java
+                    finalCode += "System.out.println("+tempLine+");\n";
+                }else if (langaugeMode == 2) {
+                    // python
+                    finalCode += "print("+tempLine+")\n";
+                }
             }
         }
 
+        // single line
         if (mode == 1) {
-            finalCode = "System.out.print("+finalCode+");";
+            if (langaugeMode == 1) {
+                // java
+                finalCode = "System.out.print("+finalCode+");";
+            }else if (langaugeMode == 2) {
+                // python
+                finalCode = "print("+finalCode+")";
+            }
             selectedMode = "single-line";
         }else{
             selectedMode = "multi-line";
