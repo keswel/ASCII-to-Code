@@ -33,13 +33,25 @@ public class asciitocode{
 
         return fixedLine;
     }
+
+    public static void printMenu() {
+      System.out.println("select mode |");
+      System.out.println("            | 1. single-line");
+      System.out.println("            | 2. multi-line");
+      System.out.println("            | 3. change language");
+      System.out.println("            | 4. help");
+    }
+
+    // allows user to select mode
     public static int modeSelector() {
-        Scanner scnr2 = new Scanner(System.in);
+        Scanner scnr = new Scanner(System.in);
         int mode;
+        String modeStr;
         while (true) {
             try {
-                System.out.println("select mode | 1. single-line\n\t\t\t| 2. multi-line\n\t\t\t| 3. change language\n\t\t\t| 4. help\n");
-                mode = scnr2.nextInt();
+                printMenu();
+                modeStr = scnr.nextLine();
+                mode = Integer.parseInt(modeStr);
                 if (mode > 0 && mode < 4) {
                     break;
                 } else {
@@ -47,12 +59,11 @@ public class asciitocode{
                 }
             } catch (Exception e) {
                 System.out.println("\ninvalid input, please try again\n");
-                scnr2.nextLine(); // clears new line
             }
         }
         return mode;
-
     }
+
     public static void main(String[] args) {
         Scanner scnr = new Scanner(System.in);
         String tempLine;
@@ -98,10 +109,11 @@ public class asciitocode{
             }
             mode = modeSelector();
         }
-
-        System.out.println("\ninstructions | 1. copy and paste ascii art \n\t\t\t | 2. type \"enter0\" under art to input\n");
-
-        //TODO: USE STRINGBUILDER INSTEAD OF += CONCATENATION TO IMPROVE PERFORMANCE
+        
+        System.out.println();
+        System.out.println("instructions |");
+        System.out.println("             | 1. copy and paste ascii art");
+        System.out.println("             | 2. type \"enter0\" under art to input\n");
 
         // reads ascii art inputted.
         while (true) {
@@ -155,6 +167,9 @@ public class asciitocode{
         }else{
             selectedMode = "multi-line";
         }
+        
+        System.out.println();
+        System.out.println(finalCode);
 
         // copies ascii art to clipboard!
         StringSelection stringSelection = new StringSelection(finalCode);
