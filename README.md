@@ -6,9 +6,9 @@
 # Line Modes
    Single-Line Mode: Generates a concise single-line Java System.out.print output for ASCII art.
    
-   Multi-Line Mode: Produces structured Java System.out.println statements for each line of the ASCII art, enhancing readability.
+   Multi-Line Mode: Produces structured Java System.out.println() statements for each line of the ASCII art, enhancing readability.
    
-   Language Selector: Currently supports Java, with future support planned for Python, Rust, and more.
+   Language Selector: Currently supports Java and Python.
    
    Automatic Clipboard Copy: Copies the generated code directly to the clipboard for easy pasting.
 
